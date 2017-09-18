@@ -15,7 +15,7 @@ timer_end = 1;
 // server sending packages link 
 /* access_key находится в data.js */
 //serverLink = "http://kava.deps.ua/index.php?option=com_exussalebanner&controller=exussalebanner&task=kava&view=exussalebanner&Itemid=1906&action=send_order&tmpl=content&key="+access_key;
-serverLink = "http://kava.deps.ua/check.php?action=order_send&key="+access_key;
+serverLink = "http://localhost/GIT/kava/check.php?action=order_send&key="+access_key;
 
 jQuery(function(){
 	
@@ -322,8 +322,8 @@ jQuery(function(){
 			}).success(function(backdata){
 				var resp = jQuery(backdata);
 				var fixx = backdata.indexOf('kava-data');
-				/*console.log("good");
-				console.log(resp);*/
+				//console.log(backdata);
+				/*console.log(resp);*/
 				if (fixx > -1){
 					// показываем все хорошо
 					jQuery('.kava-success').fadeIn();
@@ -336,8 +336,8 @@ jQuery(function(){
 			}).fail(function(backdata){
 				var resp = jQuery(backdata);
 				var fixx = backdata.indexOf('kava-data');
-				/*console.log("bad");
-				console.log(resp);*/
+				//console.log(backdata);
+				/*console.log(resp);*/
 				if (fixx > -1){
 					// показываем все хорошо
 					jQuery('.kava-success').fadeIn();
