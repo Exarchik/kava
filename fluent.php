@@ -15,12 +15,18 @@ class House
     private $doors = [];
     private $windows = [];
     
-    private function arrayize($data)
+	
+    private function arrayize()
     {
-        if(gettype($data)==='array')
-            return $data;
-        else
-            return [$data];
+		$res = [];
+		foreach (func_get_args() as $kArg => $vArg)
+		{
+			if(gettype($vArg)==='array')
+				$res = array_merge($res,$vArg);
+			else
+				array_push($res,$vArg);
+		}
+		return $res;
     }
     /**
      * House::addWalls()
@@ -28,7 +34,7 @@ class House
      * @param mixed $newWalls
      * @return
      */
-    public function addWalls(array $newWalls)
+    public function addWalls($newWalls)
     {
         $this->walls = array_merge($this->walls,$this->arrayize($newWalls));
         return $this;
@@ -40,7 +46,7 @@ class House
      * @param mixed $newDoors
      * @return
      */
-    public function addDoors(array $newDoors)
+    public function addDoors($newDoors)
     {
         $this->doors = array_merge($this->doors,$this->arrayize($newDoors));
         return $this;
@@ -52,7 +58,7 @@ class House
      * @param mixed $newWindows
      * @return
      */
-    public function addWindows(array $newWindows)
+    public function addWindows($newWindows)
     {
         $this->windows = array_merge($this->windows,$this->arrayize($newWindows));
         return $this;
@@ -64,7 +70,7 @@ class House
      * @param mixed $newMixed
      * @return
      */
-    public function addMixed(array $newMixed)
+    public function addMixed($newMixed)
     {
         foreach ($newMixed as $elementType => $elementValue)
         {
@@ -96,14 +102,15 @@ $houseOfMine = new House();
 echo $houseOfMine->addDoors($some_doors)
             ->addWalls($some_walls)
             ->addWindows($some_windows)
+			->addDoors($some_doors)
             ->addWindows(['new-window2'])
-            ->addMixed(
-                [
+            ->addMixed([
                     'doors'=>'mixed-door',
                     'walls'=>['mixed-wall','mixed-wall2'],
                     'windows'=>'mixed-windows'
-                ]
-            );
+                ])
+			->addWindows('new-window3');
+
 
 
             
