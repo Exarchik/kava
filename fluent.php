@@ -18,15 +18,15 @@ class House
 	
     private function arrayize()
     {
-		$res = [];
-		foreach (func_get_args() as $kArg => $vArg)
-		{
-			if(gettype($vArg)==='array')
-				$res = array_merge($res,$vArg);
-			else
-				array_push($res,$vArg);
-		}
-		return $res;
+	$res = [];
+	foreach (func_get_args() as $kArg => $vArg)
+	{
+		if(gettype($vArg)==='array')
+			$res = array_merge($res,$vArg);
+		else
+			array_push($res,$vArg);
+	}
+	return $res;
     }
     /**
      * House::addWalls()
