@@ -1,14 +1,33 @@
 <?php
 
 
+/**
+ * City
+ * 
+ * @package git-test
+ * @author admin
+ * @copyright 2017
+ * @version $Id$
+ * @access public
+ */
 class City
 {
 	public $houses = [];
 	
 	static private $_instance;
 	
+	/**
+	 * City::__construct()
+	 * 
+	 * @return void
+	 */
 	protected function __construct(){}
 	
+	/**
+	 * City::getInstance()
+	 * 
+	 * @return
+	 */
 	static public function getInstance() {
 		if(is_null(self::$_instance))
 		{
@@ -17,9 +36,15 @@ class City
 		return self::$_instance;
 	}
 	
-	public function addHouse($houses)
+	/**
+	 * City::addHouse()
+	 * 
+	 * @param mixed $_houses
+	 * @return
+	 */
+	public function addHouse($_houses)
 	{
-		$this->houses[] = $houses;
+		array_push($this->houses,$_houses);
 		return $this;
 	}
 	
@@ -33,6 +58,9 @@ class City
         return '<pre>'.print_r([$this->houses],1).'</pre>';
     }
 }
+
+
+
 /**
  * House
  * 
@@ -48,7 +76,13 @@ class House
     private $doors = [];
     private $windows = [];
     
+    private $elementsCount = 0;
 	
+    /**
+     * House::arrayize()
+     * 
+     * @return
+     */
     private function arrayize()
     {
 		$res = [];
@@ -115,6 +149,27 @@ class House
     }
     
     /**
+     * House::getElementCount()
+     * 
+     * @return
+     */
+    public function getElementCount()
+    {
+        return $this->elementsCount = count($this->walls)+count($this->doors)+count($this->windows);
+    }
+    
+    /**
+     * House::endHouse()
+     * 
+     * @return
+     */
+    public function endHouse()
+    {
+        $this->getElementCount();
+        return $this;    
+    }
+    
+    /**
      * House::__toString()
      * 
      * @return
@@ -131,10 +186,10 @@ $some_doors = ['door1','door2','door3'];
 $some_windows = ['window1'];
 
 $houseOfMine = new House();
+$houseOfTheir = new House();
 $city = City::getInstance();
 
-echo $houseOfMine
-		->addDoors($some_doors)
+$houseOfMine->addDoors($some_doors)
 		->addWalls($some_walls)
 		->addWindows($some_windows)
 		->addDoors($some_doors)
@@ -144,12 +199,23 @@ echo $houseOfMine
 				'walls'=>['mixed-wall','mixed-wall2'],
 				'windows'=>'mixed-windows'
 			])
-		->addWindows('new-window3');
+		->addWindows('new-window3')
+        ->endHouse();
+
+$houseOfTheir->addWindows(['new-window2'])
+		->addMixed([
+				'doors'=>'mixed-door',
+				'walls'=>['mixed-wall','mixed-wall2'],
+				'windows'=>'mixed-windows'
+			])
+		->addWindows('new-window3')
+        ->endHouse();
 
 $city->addHouse($houseOfMine);
 
 
 $city2 = City::getInstance();
+$city2->addHouse($houseOfTheir);
 
 echo $city2;
 
