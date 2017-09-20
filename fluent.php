@@ -94,14 +94,13 @@ $houseOfMine = new House();
 echo $houseOfMine->addDoors($some_doors)
             ->addWalls($some_walls)
             ->addWindows($some_windows)
-            ->addWindows(['new-window2'])
-            ->addMixed(
-                [
+            ->addMixed([
                     'doors'=>'mixed-door',
                     'walls'=>['mixed-wall','mixed-wall2'],
                     'windows'=>'mixed-windows'
-                ]
-            );
+                ])
+            ->addWindows(['new-window1'])
+            ->addWindows(['new-window2']);
 
 
             
