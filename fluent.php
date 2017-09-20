@@ -1,5 +1,38 @@
 <?php
 
+
+class City
+{
+	public $houses = [];
+	
+	static private $_instance;
+	
+	protected function __construct(){}
+	
+	static public function getInstance() {
+		if(is_null(self::$_instance))
+		{
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+	
+	public function addHouse($houses)
+	{
+		$this->houses[] = $houses;
+		return $this;
+	}
+	
+	/**
+     * House::__toString()
+     * 
+     * @return
+     */
+    public function __toString()
+    {
+        return '<pre>'.print_r([$this->houses],1).'</pre>';
+    }
+}
 /**
  * House
  * 
@@ -18,15 +51,15 @@ class House
 	
     private function arrayize()
     {
-	$res = [];
-	foreach (func_get_args() as $kArg => $vArg)
-	{
-		if(gettype($vArg)==='array')
-			$res = array_merge($res,$vArg);
-		else
-			array_push($res,$vArg);
-	}
-	return $res;
+		$res = [];
+		foreach (func_get_args() as $kArg => $vArg)
+		{
+			if(gettype($vArg)==='array')
+				$res = array_merge($res,$vArg);
+			else
+				array_push($res,$vArg);
+		}
+		return $res;
     }
     /**
      * House::addWalls()
@@ -98,20 +131,24 @@ $some_doors = ['door1','door2','door3'];
 $some_windows = ['window1'];
 
 $houseOfMine = new House();
+$city = City::getInstance();
 
-echo $houseOfMine->addDoors($some_doors)
-            ->addWalls($some_walls)
-            ->addWindows($some_windows)
-			->addDoors($some_doors)
-            ->addWindows(['new-window2'])
-            ->addMixed([
-                    'doors'=>'mixed-door',
-                    'walls'=>['mixed-wall','mixed-wall2'],
-                    'windows'=>'mixed-windows'
-                ])
-			->addWindows('new-window3');
+echo $houseOfMine
+		->addDoors($some_doors)
+		->addWalls($some_walls)
+		->addWindows($some_windows)
+		->addDoors($some_doors)
+		->addWindows(['new-window2'])
+		->addMixed([
+				'doors'=>'mixed-door',
+				'walls'=>['mixed-wall','mixed-wall2'],
+				'windows'=>'mixed-windows'
+			])
+		->addWindows('new-window3');
 
+$city->addHouse($houseOfMine);
 
+echo $city;
 
             
             
