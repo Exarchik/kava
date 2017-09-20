@@ -15,6 +15,13 @@ class House
     private $doors = [];
     private $windows = [];
     
+    private function arrayize($data)
+    {
+        if(gettype($data)==='array')
+            return $data;
+        else
+            return [$data];
+    }
     /**
      * House::addWalls()
      * 
@@ -23,7 +30,7 @@ class House
      */
     public function addWalls(array $newWalls)
     {
-        $this->walls = array_merge($this->walls,$newWalls);
+        $this->walls = array_merge($this->walls,$this->arrayize($newWalls));
         return $this;
     }
     
@@ -35,7 +42,7 @@ class House
      */
     public function addDoors(array $newDoors)
     {
-        $this->doors = array_merge($this->doors,$newDoors);
+        $this->doors = array_merge($this->doors,$this->arrayize($newDoors));
         return $this;
     }
     
@@ -47,7 +54,7 @@ class House
      */
     public function addWindows(array $newWindows)
     {
-        $this->windows = array_merge($this->windows,$newWindows);
+        $this->windows = array_merge($this->windows,$this->arrayize($newWindows));
         return $this;
     }
     
@@ -63,12 +70,7 @@ class House
         {
             $funcName = "add".ucfirst(strtolower($elementType));
             if (method_exists($this,$funcName) && ($funcName!=='addMixed'))
-            {
-                if(gettype($elementValue)==='array')
-                    $this->$funcName($elementValue);
-                else
-                    $this->$funcName([$elementValue]);
-            }
+                    $this->$funcName($this->arrayize($elementValue));
         }
         return $this;
     }
