@@ -146,22 +146,12 @@ echo $houseOfMine
 			])
 		->addWindows('new-window3');
 
-<<<<<<< HEAD
-echo $houseOfMine->addDoors($some_doors)
-            ->addWalls($some_walls)
-            ->addWindows($some_windows)
-            ->addMixed([
-                    'doors'=>'mixed-door',
-                    'walls'=>['mixed-wall','mixed-wall2'],
-                    'windows'=>'mixed-windows'
-                ])
-            ->addWindows(['new-window1'])
-            ->addWindows(['new-window2']);
-=======
 $city->addHouse($houseOfMine);
->>>>>>> 426c53deed0cea1635f68dc194d11108fff2b79c
 
-echo $city;
+
+$city2 = City::getInstance();
+
+echo $city2;
 
             
             
