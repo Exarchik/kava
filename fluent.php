@@ -1,5 +1,38 @@
 <?php
 
+
+class City
+{
+	public $houses = [];
+	
+	static private $_instance;
+	
+	protected function __construct(){}
+	
+	static public function getInstance() {
+		if(is_null(self::$_instance))
+		{
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+	
+	public function addHouse($houses)
+	{
+		$this->houses[] = $houses;
+		return $this;
+	}
+	
+	/**
+     * House::__toString()
+     * 
+     * @return
+     */
+    public function __toString()
+    {
+        return '<pre>'.print_r([$this->houses],1).'</pre>';
+    }
+}
 /**
  * House
  * 
@@ -15,15 +48,28 @@ class House
     private $doors = [];
     private $windows = [];
     
+	
+    private function arrayize()
+    {
+		$res = [];
+		foreach (func_get_args() as $kArg => $vArg)
+		{
+			if(gettype($vArg)==='array')
+				$res = array_merge($res,$vArg);
+			else
+				array_push($res,$vArg);
+		}
+		return $res;
+    }
     /**
      * House::addWalls()
      * 
      * @param mixed $newWalls
      * @return
      */
-    public function addWalls(array $newWalls)
+    public function addWalls($newWalls)
     {
-        $this->walls = array_merge($this->walls,$newWalls);
+        $this->walls = array_merge($this->walls,$this->arrayize($newWalls));
         return $this;
     }
     
@@ -33,9 +79,9 @@ class House
      * @param mixed $newDoors
      * @return
      */
-    public function addDoors(array $newDoors)
+    public function addDoors($newDoors)
     {
-        $this->doors = array_merge($this->doors,$newDoors);
+        $this->doors = array_merge($this->doors,$this->arrayize($newDoors));
         return $this;
     }
     
@@ -45,9 +91,9 @@ class House
      * @param mixed $newWindows
      * @return
      */
-    public function addWindows(array $newWindows)
+    public function addWindows($newWindows)
     {
-        $this->windows = array_merge($this->windows,$newWindows);
+        $this->windows = array_merge($this->windows,$this->arrayize($newWindows));
         return $this;
     }
     
@@ -57,18 +103,13 @@ class House
      * @param mixed $newMixed
      * @return
      */
-    public function addMixed(array $newMixed)
+    public function addMixed($newMixed)
     {
         foreach ($newMixed as $elementType => $elementValue)
         {
             $funcName = "add".ucfirst(strtolower($elementType));
             if (method_exists($this,$funcName) && ($funcName!=='addMixed'))
-            {
-                if(gettype($elementValue)==='array')
-                    $this->$funcName($elementValue);
-                else
-                    $this->$funcName([$elementValue]);
-            }
+                    $this->$funcName($this->arrayize($elementValue));
         }
         return $this;
     }
@@ -90,7 +131,22 @@ $some_doors = ['door1','door2','door3'];
 $some_windows = ['window1'];
 
 $houseOfMine = new House();
+$city = City::getInstance();
 
+echo $houseOfMine
+		->addDoors($some_doors)
+		->addWalls($some_walls)
+		->addWindows($some_windows)
+		->addDoors($some_doors)
+		->addWindows(['new-window2'])
+		->addMixed([
+				'doors'=>'mixed-door',
+				'walls'=>['mixed-wall','mixed-wall2'],
+				'windows'=>'mixed-windows'
+			])
+		->addWindows('new-window3');
+
+<<<<<<< HEAD
 echo $houseOfMine->addDoors($some_doors)
             ->addWalls($some_walls)
             ->addWindows($some_windows)
@@ -101,7 +157,11 @@ echo $houseOfMine->addDoors($some_doors)
                 ])
             ->addWindows(['new-window1'])
             ->addWindows(['new-window2']);
+=======
+$city->addHouse($houseOfMine);
+>>>>>>> 426c53deed0cea1635f68dc194d11108fff2b79c
 
+echo $city;
 
             
             
