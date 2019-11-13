@@ -15,9 +15,6 @@ if ($admLogin != $_SERVER['PHP_AUTH_USER'] || $admPass != $_SERVER['PHP_AUTH_PW'
     die ("Необходима авторизация");
 }
 
-require_once("libs/sourceAdmin.php");
-$sourceAdmin = new SourceAdmin($db, new PrepareData($db), $config, $_REQUEST);
-
 $controller = new Controller($db);
 $app = new App($db, App::APP_TYPE_ADMIN);
 $app->process();
