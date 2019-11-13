@@ -22,9 +22,11 @@ require_once("const.php");
 require_once("db.php");
 require_once("functions.php");
 
-require_once("libs/prepareData.php");
-require_once("libs/source.php");
+require_once(_LIBS.'DataHelper.php');
 
-require_once("libs/controllers/Controller.php");
+require_once(_LIBS."prepareData.php");
+require_once(_LIBS."source.php");
 
-require_once("libs/app.php");
+require_once(_LIBS."controllers/Controller.php");
+
+require_once(_LIBS."app.php");

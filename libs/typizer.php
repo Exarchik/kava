@@ -10,6 +10,7 @@ class Typizer
         //'primary' => 'getPrimaryType',
         'image' => 'getImageType',
         'boolean' => 'getBooleanType',
+        'month' => 'getMonthType',
     );
 
     public $formFieldsType = array(
@@ -105,6 +106,15 @@ class Typizer
         return $value == 0
                ? '<i style="color:red" class="fa kava-icon fa-ban" title="ні"></i>'
                : '<i style="color:#2eca07" class="fa kava-icon fa-check-circle" title="так"></i>';
+    }
+
+    public function getMonthType($value, $attr = [])
+    {
+        $monthes = DataHelper::getMonthsList();
+        if (isset($monthes[$value])) {
+            return $monthes[$value];
+        }
+        return $value;
     }
 
     /*

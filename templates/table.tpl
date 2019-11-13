@@ -24,8 +24,12 @@
                 <td> {$values[$field]} </td>
             {/foreach}
             <td>
-                <a class="edit-row" data-path="{$path}" data-id="{$values.id}" href="#"><i style="color:blue;" class="fa kava-icon fa-edit"></i></a>&nbsp;
-                <a class="delete-row" data-path="{$path}" data-id="{$values.id}" href="#"><i style="color:red;" class="fa kava-icon fa-remove"></i></a>
+                {foreach $buttons as $actionType => $params}
+                {if $params.hide}
+                    {continue}
+                {/if}
+                <a class="action-row" data-action="{$actionType}" data-path="{$path}" data-id="{$values.id}" href="#"><i style="{if $params.color}color:{$params.color};{/if}" class="fa kava-icon {if $params.icon}{$params.icon}{else}fa-info{/if}"></i></a>&nbsp;
+                {/foreach}
             </td>
         </tr>    
         {/foreach}

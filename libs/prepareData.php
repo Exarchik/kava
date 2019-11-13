@@ -87,30 +87,13 @@ class PrepareData
 
         return $isJson ? json_encode(array_merge($hasBooks, $hasNoBooks)) : array_merge($hasBooks, $hasNoBooks);
     }
+
+    public function getKavaDataByYearsMonths()
+    {
+        $sql = "SELECT COUNT(*) AS `count`, SUM(summary) AS `money_for_month`, YEAR(order_time) AS `year`, MONTH(order_time) AS `month`
+                FROM `_kava_data`
+                GROUP BY `year`, `month`
+                ORDER BY `year` ASC, `month` ASC";
+        return $this->db->getAll($sql);
+    }
 }
-
-/*
-SELECT tmp.* FROM (
-SELECT b.*, b.amount - (SELECT count(*) FROM `data_books` AS db WHERE db.book_id = b.id AND db.is_returned = 0) AS `amount`
-FROM books AS b
-WHERE b.is_visible = 1
-ORDER BY b.ordering ASC) AS tmp
-
-SELECT tmp.* FROM (
-SELECT b.caption AS _caption, b.author AS _author, b.img AS _img, b.amount - (SELECT count(*) FROM `data_books` AS db WHERE db.book_id = b.id AND db.is_returned = 0) AS `amount`, b.ordering AS ordering
-FROM books AS b
-WHERE b.is_visible = 1
-ORDER BY b.ordering ASC) AS tmp
-ORDER BY IF(tmp.amount>0,1,0) ASC, tmp._caption
-
-
-SELECT b.*, (b.amount - (SELECT count(*) FROM `data_books` AS db WHERE db.book_id = b.id AND db.is_returned = 0)) AS amount
-                FROM books AS b
-                WHERE b.is_visible = 1 AND (b.amount - (SELECT count(*) FROM `data_books` AS db WHERE db.book_id = b.id AND db.is_returned = 0)) > 0
-ORDER BY b.caption
-UNION
-SELECT b.*, (b.amount - (SELECT count(*) FROM `data_books` AS db WHERE db.book_id = b.id AND db.is_returned = 0)) AS amount
-                FROM books AS b
-                WHERE b.is_visible = 1 AND (b.amount - (SELECT count(*) FROM `data_books` AS db WHERE db.book_id = b.id AND db.is_returned = 0)) < 1
-ORDER BY b.caption
-*/

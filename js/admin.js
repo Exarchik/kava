@@ -5,13 +5,14 @@
 		jQuery('.kava-admin-form').hide();
 	});
 
-	// редактируем строчку
-	jQuery('body').on('click', '.edit-row', function() {
+	// что-то делаем со строчкой
+	jQuery('body').on('click', '.action-row', function() {
 		$this = jQuery(this);
 		var currentPath = $this.data('path');
+		var currentAction = $this.data('action');
 		var rowId = $this.data('id');
 
-		var formLink = admin_base_link+'?l='+currentPath+'&a=edit&id='+rowId;
+		var formLink = admin_base_link+'?l='+currentPath+'&a='+currentAction+'&id='+rowId;
 
 		jQuery.ajax({
 			url: formLink,

@@ -29,6 +29,7 @@ class Controller
     // передает параметры шаблону и строит по нему результат возвращает string
     public function renderView($template, $params)
     {
+        $params = array_merge_recursive($this->getDefaultParameters(), $params);
         $this->returnType = 'renderView';
         return $this->renderer->renderView($template, $params);
     }
@@ -54,6 +55,17 @@ class Controller
         return $this->renderer->json($data);
     }
 
+    // базовые параметры для Рендерера
+    public function getDefaultParameters()
+    {
+        return array(
+            'buttons' => array(
+                'edit' => array('icon' => 'fa-edit', 'color' => 'blue'),
+                'delete' => array('icon' => 'fa-remove', 'color' => 'red'),
+            )
+        );
+    }
+
     public static function factory($controllerClass, $db, $tmplDir = _TEMPLATES)
     {
         if (file_exists(_LIBS_CONTROLLERS . $controllerClass . ".php")) {
@@ -62,10 +74,10 @@ class Controller
         } 
         return new self($db, $tmplDir);
     }
+
+    // базовый метод просто выводит пустую строчку
+    public function indexAction($request)
+    {
+        return '<pre>--цього розділу насправді не існує--</pre>';
+    }
 }
-
-/*
-$controller = new Controller([]);
-
-$result = $controller->renderView('test.tpl', ['datas' => array('test1', 'test2')]);
-*/
