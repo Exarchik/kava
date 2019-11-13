@@ -1,0 +1,39 @@
+﻿jQuery( document ).ready(function() {
+
+	jQuery('body').on('click', '.close-form', function() {
+		jQuery('.darkness').hide();
+		jQuery('.kava-admin-form').hide();
+	});
+
+	// редактируем строчку
+	jQuery('body').on('click', '.edit-row', function() {
+		$this = jQuery(this);
+		var currentPath = $this.data('path');
+		var rowId = $this.data('id');
+
+		var formLink = admin_base_link+'?l='+currentPath+'&a=edit&id='+rowId;
+
+		jQuery.ajax({
+			url: formLink,
+			type: "GET",
+			//data: {'name': name},
+			dataType: "html",
+			// перед началом отправки
+			beforeSend: function(xhr) {
+				// показываем анимацию загрузки
+				jQuery('.kava-loader').show();
+				jQuery('.darkness').show();
+			},
+		}).success(function(backdata) {
+			jQuery('#basic-form').html(backdata);
+			jQuery('.kava-admin-form').show();
+			console.log(backdata);
+			jQuery('.kava-loader').hide();
+		}).fail(function(backdata) {
+			var response = jQuery.parseJSON(backdata);
+			console.log(response);
+			jQuery('.kava-loader').hide();
+		});
+	});
+	
+});

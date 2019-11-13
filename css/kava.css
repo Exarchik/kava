@@ -3,10 +3,26 @@ body{
 	background-image: url(../elements-images/bg/kava-bg.jpg);
 	background-attachment: fixed;
 }
+
+::-ms-clear {
+    display: none;
+}
+
+.form-control-clear {
+    z-index: 10;
+    pointer-events: auto;
+    cursor: pointer;
+    position: relative;
+    float: right;
+    top: -49px;
+    font-size: 20px;
+    right: 15px;
+}
+
 label{
 	font-size: 20px;
 }
-#surname-data {
+.input-data {
     font-size: 30px;
     height: 65px;
 }
@@ -25,13 +41,13 @@ label{
     z-index: 10001;
 	display: none;
     opacity: 0.9;
-    top: 30%;
+    top: 27%;
     text-align: center;
     width: 100%;
 }
 .kava-msg {
-    position: fixed; /*absolute;*/
-    top: 30%;
+    position: fixed;
+    top: 25%;
     text-align: center;
     width: 100%;
     z-index: 10001;
@@ -46,15 +62,21 @@ label{
 	font-size: 30px;
 }
 .main-container {
-    margin-top: 95px;
+    margin-bottom: 95px;
 }
+
+ul.top-kava-menu.nav.nav-tabs>li>a {
+    font-size: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
 .timer{
 	background-color: #007B99; 
     width: 0%;
     height: 5px;
     margin-top: 16px;
     margin-bottom: -21px;
-    /*display: none;*/
 }
 .errors {
     color: red;
@@ -77,7 +99,7 @@ label{
 	margin-bottom: 20px;
 }
 .select_list img{
-	width: 80%;/*100%;*/
+	width: 100%;
 }
 .select_list .qty{
 	display: none;
@@ -100,6 +122,11 @@ label{
     border: 1px #333 solid;
     width: 45px;
     text-align: center;
+}
+.select_list.select_books .product-qty.qty-block {
+    top: 0px;
+    right: 15px;
+    left: auto;
 }
 .select_list .button-qty.button-minus {
     top: 40%;/*59px;*/
@@ -138,12 +165,38 @@ label{
 	-ms-user-select: none;
 	max-width:350px;
 }
+.element-data.disabled {
+    opacity: 0.4;
+    cursor: no-drop;
+}
+
+.books-button {
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+    width: 29%;
+    text-align: center;
+}
+.books-button .btn-success {
+    font-size: 35px;
+    margin-top: -7px;
+    width: 100%;
+}
+
+#snack-data .element-data {
+    height: 270px;
+}
+
+#books-data .element-data {
+    height: 300px;
+}
+
 @keyframes press_element {
     0%   {border-radius: 5px;}
     50% {border-radius: 10px;}
 	100%   {border-radius: 5px;}
 }
-.element-data.selected {
+.element-data.selected, .element-data.selected-books {
 	/*border-radius: 15px;*/
 	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 18px rgba(59, 220, 136, 0.99);
 	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 18px rgba(59, 220, 136, 0.99);
@@ -166,13 +219,29 @@ label{
     margin-top: 20px;
 }
 .div-inline-block{
-	width: 450px;
+	width: 502px;
     display: inline-block;
     text-align: left;
 	color: #333;
 }
+.div-inline-block.tmp-books-return-list-inner {
+    width: 600px;
+    text-align: center;
+}
 .tmp-order-list-inner{
 	min-height: 100px; 
+}
+.tmp-order-list-inner .tmp-order-element {
+    border-bottom: 4px #333333 dotted;
+    position: relative;
+    bottom: 13px;
+}
+.tmp-order-list-inner .tmp-order-element .tmp-order-caption,
+.tmp-order-list-inner .tmp-order-element .tmp-order-qty {
+    position: relative;
+    top: 18px;
+    background: #fbfbfb;
+    padding: 0 6px;
 }
 hr.hr-order{
 	border: 2px #18b156 dashed;
@@ -183,17 +252,17 @@ span.tmp-order-qty {
     float: right;
 }
 
-.navbar-fixed-top {
-    top: 0px;
+.navbar-fixed-bottom {
+    bottom: 0px;
     background-color: #fff;
     padding: 10px;
     text-align: center;
 }
 
-.navbar-fixed-top .btn {
+.navbar-fixed-bottom .btn {
     font-size: 35px;
     bottom: 10px;
-    width: 30%;
+    width: 33%;
     min-width: 180px;
 	max-width: 380px;
 	padding: 15px;
@@ -202,4 +271,65 @@ span.tmp-order-qty {
 .fa-plus-square, .fa-minus-square {
     background-color: #fff;
     border-radius: 29px;
+}
+
+.return-book-order {
+    padding: 15px;
+    border: 1px #ccc solid;
+    border-radius: 7px;
+    margin-bottom: 8px;
+    min-height: 76px;
+}
+.return-book-order.return-book-green {
+    background-color: #cee6d5;
+}
+.return-book-order.return-book-yellow {
+    background-color: #f1e7bb;
+}
+.return-book-order.return-book-red {
+    background-color: #e8afaf;
+}
+.return-book-list {
+    display: inline-block;
+}
+a.return-book-return {
+    float: right;
+    display: inline-block;
+    margin-top: -6px;
+}
+
+/*datepicker mobile sizing*/
+
+.datepicker {
+    width: 500px !important;
+}
+.datepicker--nav {
+    min-height: 50px !important;
+}
+.datepicker--nav-title {
+    font-size: 20px !important;
+}
+.datepicker--days-names {
+    font-size: 20px !important;
+}
+.datepicker--cell {
+    height: 50px !important;
+}
+.datepicker--cell-day {
+    font-size: 20px !important;
+}
+
+/*admin elements*/
+
+div.default-admin-form .form-group label {
+    text-align: right;
+}
+
+#generated-table_filter input[type="search"] {
+    border: 1px #a5a2a2 solid;
+    border-radius: 5px;
+}
+
+i.fa.kava-icon {
+    font-size: 20px;
 }

@@ -1,0 +1,1 @@
+<input class="form-control" id="input-{$field}" name="input-{$field}" type="hidden" value="{$value}"/>
