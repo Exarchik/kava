@@ -9,7 +9,7 @@
             {/if}
             <th> {$value.caption} </th>
         {/foreach}
-        <th> Керування </th>
+        {if !empty($buttons)}<th> Керування </th>{/if}
         </tr>
     </thead>
     <tbody>
@@ -23,14 +23,14 @@
                 {/if}
                 <td> {$values[$field]} </td>
             {/foreach}
+            {if !empty($buttons)}
             <td>
                 {foreach $buttons as $actionType => $params}
-                {if $params.hide}
-                    {continue}
-                {/if}
-                <a class="action-row" data-action="{$actionType}" data-path="{$path}" data-index="{$values[$indexField]}" href="#"><i style="{if $params.color}color:{$params.color};{/if}" class="fa kava-icon {if $params.icon}{$params.icon}{else}fa-info{/if}"></i></a>&nbsp;
+                {set $ajaxed = (isset($params['not-ajax']) ? 'false' : 'true')}
+                <a class="action-row" data-action="{$actionType}" data-path="{$path}" data-ajaxed="{$ajaxed}" data-index="{$values[$indexField]}" href="#"><i style="{if $params.color}color:{$params.color};{/if}" class="fa kava-icon {if $params.icon}{$params.icon}{else}fa-info{/if}"></i></a>&nbsp;
                 {/foreach}
             </td>
+            {/if}
         </tr>    
         {/foreach}
     </tbody>

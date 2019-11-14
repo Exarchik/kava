@@ -6,7 +6,7 @@ class AdminCustomersController extends Controller
 
     public $fieldsData = array(
         'id' => array('caption' => 'ID', 'type' => 'primary'),
-        'fio' => array('caption' => 'Назва', 'type' => 'text'),
+        'fio' => array('caption' => 'ПІБ', 'type' => 'text'),
         'deps-code' => array('caption' => 'Код картки', 'type' => 'text'),
         'is_visible' => array('caption' => 'Відображення', 'type' => 'boolean', 'default' => true),
     );

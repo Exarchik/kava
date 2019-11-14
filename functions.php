@@ -40,10 +40,6 @@ function methodByAction($action, $subLink = '') {
     return 'action'.join('', array_map('ucfirst', explode(' ', $action)));
 }
 
-function methodByRequestData($request) {
-
-}
-
 function parseUrl($request = array(), $appType = 'web') {
     $urlData = array(
         'app' => $appType,
@@ -73,13 +69,13 @@ function parseUrl($request = array(), $appType = 'web') {
         $urlData['id'] = intval($request['id']);
     }
 
-    $urlData['controllerName'] = ucfirst($urlData['app'])
-        .join('',array_map('ucfirst',explode(' ',str_replace(array('-','_'),' ',$urlData['link']))))
-        .ucfirst($urlData['sublink'])
-        .'Controller';
-    $urlData['actionMethod'] = $urlData['action'].'Action';
-
-    //$methodName = methodByAction($urlData['link'], $urlData['sublink']);
+    $urlData['controllerName'] = ucfirst($urlData['app']) . stringToMethodName($urlData['link']) . stringToMethodName($urlData['sublink']) . 'Controller';
+    $urlData['actionMethod'] = stringToMethodName($urlData['action'], true) . 'Action';
 
     return $urlData;
+}
+
+function stringToMethodName($stringData, $camelCase = false) {
+    $str = join('', array_map('ucfirst', explode(' ', str_replace(array('-', '_'), ' ', $stringData))));
+    return $camelCase ? lcfirst($str) : $str;
 }

@@ -88,6 +88,12 @@ class Controller
             }
         }
 
+        foreach ($newParameters['buttons'] as $key => $button){
+            if (isset($button['hide'])) {
+                unset($newParameters['buttons'][$key]);
+            }
+        }
+
         return $newParameters;
     }
 

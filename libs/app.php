@@ -40,6 +40,11 @@ class App
         $this->request = $this->generateRequest();
 
         $controllerData = parseUrl($this->request['get'], $this->appType);
+        /*
+        echo '<pre>';
+        print_r($controllerData);
+        echo '</pre>';
+        */
 
         $theController = Controller::factory($controllerData['controllerName'], $this->db);
 

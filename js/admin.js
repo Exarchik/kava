@@ -11,9 +11,14 @@
 		var currentPath = $this.data('path');
 		var currentAction = $this.data('action');
 		var rowIndex = $this.data('index');
+		var ajaxed = $this.data('ajaxed');
 
 		var formLink = admin_base_link+'?l='+currentPath+'&a='+currentAction+'&id='+rowIndex;
 
+		if (!ajaxed) {
+			document.location.href = formLink;
+		}
+		
 		jQuery.ajax({
 			url: formLink,
 			type: "GET",
