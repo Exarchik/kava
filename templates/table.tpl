@@ -28,7 +28,7 @@
                 {if $params.hide}
                     {continue}
                 {/if}
-                <a class="action-row" data-action="{$actionType}" data-path="{$path}" data-id="{$values.id}" href="#"><i style="{if $params.color}color:{$params.color};{/if}" class="fa kava-icon {if $params.icon}{$params.icon}{else}fa-info{/if}"></i></a>&nbsp;
+                <a class="action-row" data-action="{$actionType}" data-path="{$path}" data-index="{$values[$indexField]}" href="#"><i style="{if $params.color}color:{$params.color};{/if}" class="fa kava-icon {if $params.icon}{$params.icon}{else}fa-info{/if}"></i></a>&nbsp;
                 {/foreach}
             </td>
         </tr>    

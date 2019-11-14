@@ -28,7 +28,8 @@ class AdminKavaDataController extends Controller
                 'view-month-data' => array('icon' => 'fa-list'),
                 'edit' => array('hide' => true),
                 'delete' => array('hide' => true),
-            )
+            ),
+            'indexField' => 'index'
         );
 
         return $this->renderView('table.tpl', $params);

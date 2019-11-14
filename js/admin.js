@@ -10,9 +10,9 @@
 		$this = jQuery(this);
 		var currentPath = $this.data('path');
 		var currentAction = $this.data('action');
-		var rowId = $this.data('id');
+		var rowIndex = $this.data('index');
 
-		var formLink = admin_base_link+'?l='+currentPath+'&a='+currentAction+'&id='+rowId;
+		var formLink = admin_base_link+'?l='+currentPath+'&a='+currentAction+'&id='+rowIndex;
 
 		jQuery.ajax({
 			url: formLink,

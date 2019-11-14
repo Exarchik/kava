@@ -90,7 +90,11 @@ class PrepareData
 
     public function getKavaDataByYearsMonths()
     {
-        $sql = "SELECT COUNT(*) AS `count`, SUM(summary) AS `money_for_month`, YEAR(order_time) AS `year`, MONTH(order_time) AS `month`
+        $sql = "SELECT COUNT(*) AS `count`,
+                        SUM(summary) AS `money_for_month`,
+                        YEAR(order_time) AS `year`,
+                        MONTH(order_time) as `month`,
+                        CONCAT(YEAR(order_time),'-',MONTH(order_time)) AS `index`
                 FROM `_kava_data`
                 GROUP BY `year`, `month`
                 ORDER BY `year` ASC, `month` ASC";

@@ -22,6 +22,7 @@ class Controller
     // передает параметры шаблону и строит по нему результат выводит в stdout
     public function render($template, $params)
     {
+        $params = $this->prepareParameters($params);
         $this->returnType = 'render';
         return $this->renderer->render($template, $params);
     }
@@ -29,7 +30,7 @@ class Controller
     // передает параметры шаблону и строит по нему результат возвращает string
     public function renderView($template, $params)
     {
-        $params = array_merge_recursive($this->getDefaultParameters(), $params);
+        $params = $this->prepareParameters($params);
         $this->returnType = 'renderView';
         return $this->renderer->renderView($template, $params);
     }
@@ -37,6 +38,7 @@ class Controller
     // передает параметры шаблону и строит по нему результат возвращает string игнорируя оcновной layout 
     public function renderClear($template, $params)
     {
+        $params = $this->prepareParameters($params);
         $this->returnType = 'renderClear';
         return $this->renderer->renderView($template, $params);
     }
@@ -59,11 +61,34 @@ class Controller
     public function getDefaultParameters()
     {
         return array(
+            // кнопки по умолчанию чтобы спрятать нужно в параметрах передать hide => true
             'buttons' => array(
                 'edit' => array('icon' => 'fa-edit', 'color' => 'blue'),
                 'delete' => array('icon' => 'fa-remove', 'color' => 'red'),
-            )
+            ),
+            // поле по котрому отправляются запросы на сервер
+            'indexField' => 'id',
         );
+    }
+
+    //
+    public function prepareParameters($params)
+    {
+        $newParameters = $this->getDefaultParameters();
+
+        foreach($params as $key => $param) {
+            if (!isset($newParameters[$key])) {
+                $newParameters[$key] = $param;
+            } else {
+                if (is_array($param)) {
+                    $newParameters[$key] = array_merge_recursive($newParameters[$key], $param);
+                } else {
+                    $newParameters[$key] = $param;
+                }
+            }
+        }
+
+        return $newParameters;
     }
 
     public static function factory($controllerClass, $db, $tmplDir = _TEMPLATES)
