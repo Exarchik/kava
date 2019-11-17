@@ -61,8 +61,9 @@ class Controller
     public function getDefaultParameters()
     {
         return array(
-            // кнопки по умолчанию чтобы спрятать нужно в параметрах передать hide => true
+            // кнопки по умолчанию чтобы спрятать нужно в параметрах передать false
             'buttons' => array(
+                'add' => array('icon' => 'fa-plus', 'color' => 'green', 'caption' => 'Додати', 'for-head' => true),
                 'edit' => array('icon' => 'fa-edit', 'color' => 'blue'),
                 'delete' => array('icon' => 'fa-remove', 'color' => 'red'),
             ),
@@ -85,7 +86,7 @@ class Controller
                         if ($bData === false) {
                             unset($newParameters[$key][$bKey]);
                         } else {
-                            $newParameters[$key][$bKey] = $bData;
+                            $newParameters[$key][$bKey] = array_merge($newParameters[$key][$bKey], $bData);
                         }
                     }
                 } else {

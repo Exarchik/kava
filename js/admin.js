@@ -32,7 +32,7 @@
 		$this = jQuery(this);
 		var currentPath = $this.data('path');
 		var currentAction = $this.data('action');
-		var rowIndex = $this.data('index');
+		var rowIndex = $this.data('index') ? $this.data('index') : '0';
 		var ajaxed = $this.data('ajaxed');
 
 		var formLink = admin_base_link+'?l='+currentPath+'&a='+currentAction+'&id='+rowIndex;

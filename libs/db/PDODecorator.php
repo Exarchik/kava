@@ -53,6 +53,15 @@ class PDODecorator
         return $data;
     }
 
+    public function quoteAllFields($data)
+    {
+        $result = array();
+        foreach ($data as $key => $value) {
+            $result[$key] = "`".$value."`";
+        }
+        return $result;
+    }
+
     public function quoteAll($data)
     {
         $result = array();

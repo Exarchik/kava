@@ -24,9 +24,20 @@ class AdminCustomersController extends Controller
             'path' => $this->path,
             'fields' => $this->fieldsData,
             'data' => $data,
+            'buttons' => array(
+                'add' => array('caption' => 'Додати користувача'),
+            ),
         );
 
         return $this->renderView('table.tpl', $params);
+    }
+
+    public function addAction($request)
+    {
+        $data = array_fill_keys(array_keys($this->fieldsData), '');
+        
+        $formData = $this->typizer->prepareDataForForm($data, $this->fieldsData);
+        return $this->renderClear('default-form.tpl', array('path' => $this->path, 'data' => $formData));
     }
 
     public function editAction($request)
@@ -46,11 +57,15 @@ class AdminCustomersController extends Controller
     {
         $preparedData = DataHelper::prepareFormData($request['post'], $this->fieldsData);
 
-        $updateSql = array();
-        foreach ($preparedData['data'] as $key => $value) {
-            $updateSql[] = "`{$key}` = {$this->db->quote($value)}";
+        $dataSql = array();
+        if (!empty($preparedData['id'])) {
+            foreach ($preparedData['data'] as $key => $value) {
+                $dataSql[] = "`{$key}` = {$this->db->quote($value)}";
+            }
+            $sql = "UPDATE `_kava_persons` SET ".join(', ', $dataSql)." WHERE `id` = {$preparedData['id']}";
+        } else {
+            $sql = "INSERT INTO `_kava_persons` (".join(',', $this->db->quoteAllFields(array_keys($preparedData['data']))).") VALUES (".join(',', $this->db->quoteAll($preparedData['data'])).")";
         }
-        $sql = "UPDATE `_kava_persons` SET ".join(', ', $updateSql)." WHERE `id` = {$preparedData['id']}";
 
         $result = $this->db->query($sql);
         return $this->json(array('result' => ($result != false)));
