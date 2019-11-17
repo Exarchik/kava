@@ -10,7 +10,7 @@ class AdminListBooksController extends Controller
         'author' => array('caption' => 'Автор', 'type' => 'text'),
         'img' => array('caption' => 'Вигляд', 'type' => 'image', 'params' => array('size' => '50px', 'baselink' => 'elements-images/books/')),
         'amount' => array('caption' => 'Кількість', 'type' => 'integer'),
-        'get_amount' => array('caption' => 'У користуванні', 'type' => 'primary'),
+        'get_amount' => array('caption' => 'У користуванні', 'type' => 'integer'),
         'ordering' => array('caption' => 'Порядок', 'type' => 'integer', 'default' => 0),
         'is_visible' => array('caption' => 'Відображення', 'type' => 'boolean', 'default' => true),
     );
@@ -44,6 +44,12 @@ class AdminListBooksController extends Controller
 
         $formData = $this->typizer->prepareDataForForm($data, $this->fieldsData);
         return $this->renderClear('default-form.tpl', array('path' => $this->path, 'data' => $formData));
+    }
+
+    public function sendFormAction($request)
+    {
+        $preparedData = DataHelper::prepareFormData($request['post'], $this->fieldsData);
+        return $this->json($preparedData);
     }
 }
 

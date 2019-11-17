@@ -1,14 +1,15 @@
 ﻿jQuery( document ).ready(function() {
 
-	jQuery('body').on('click', '.close-form', function() {
+	jQuery('body').on('click', '.close-form, .darkness', function() {
 		jQuery('.darkness').hide();
 		jQuery('.kava-admin-form').hide();
 	});
 
 	jQuery('body').on('click', '.send-form', function() {
-		var adminFormData = {'form-path':jQuery('#admin-form').data('path'), 'form-data':jQuery('#admin-form').serializeArray()};
-		var sendLink = admin_base_link+'?l='+adminFormData['form-path']+'&a=send-form';
-		console.log([sendLink, adminFormData]);
+		var adminFormData = jQuery('#admin-form').serializeArray();
+		var formPath = jQuery('#admin-form').data('path');
+		var sendLink = admin_base_link+'?l='+formPath+'&a=send-form';
+		//console.log([sendLink, adminFormData]);
 		jQuery.ajax({
 			url: sendLink,
 			type: "POST",

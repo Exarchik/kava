@@ -44,7 +44,8 @@ class AdminCustomersController extends Controller
 
     public function sendFormAction($request)
     {
-        return $this->json($request['post']);
+        $preparedData = DataHelper::prepareFormData($request['post'], $this->fieldsData);
+        return $this->json($preparedData);
     }
 }
 

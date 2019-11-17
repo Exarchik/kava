@@ -44,5 +44,10 @@ class AdminListNapoiController extends Controller
         $formData = $this->typizer->prepareDataForForm($data, $this->fieldsData);
         return $this->renderClear('default-form.tpl', array('path' => $this->path, 'data' => $formData));
     }
+    public function sendFormAction($request)
+    {
+        $preparedData = DataHelper::prepareFormData($request['post'], $this->fieldsData);
+        return $this->json($preparedData);
+    }
 }
 
