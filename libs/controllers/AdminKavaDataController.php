@@ -35,6 +35,7 @@ class AdminKavaDataController extends Controller
                 'view-month-data' => array('icon' => 'fa-list', 'not-ajax' => true),
                 'edit' => false,
                 'delete' => false,
+                'add' => false,
             ),
             'indexField' => 'index'
         );
@@ -65,6 +66,7 @@ class AdminKavaDataController extends Controller
             'buttons' => array(
                 'edit' => false,
                 'delete' => false,
+                'add' => false,
             ),
         );
 

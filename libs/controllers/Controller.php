@@ -85,8 +85,10 @@ class Controller
                     foreach ($param as $bKey => $bData) {
                         if ($bData === false) {
                             unset($newParameters[$key][$bKey]);
-                        } else {
+                        } elseif (isset($newParameters[$key][$bKey])) {
                             $newParameters[$key][$bKey] = array_merge($newParameters[$key][$bKey], $bData);
+                        } else {
+                            $newParameters[$key][$bKey] = $bData;
                         }
                     }
                 } else {
