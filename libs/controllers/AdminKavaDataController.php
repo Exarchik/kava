@@ -33,8 +33,8 @@ class AdminKavaDataController extends Controller
             'data' => $data,
             'buttons' => array(
                 'view-month-data' => array('icon' => 'fa-list', 'not-ajax' => true),
-                'edit' => array('hide' => true),
-                'delete' => array('hide' => true),
+                'edit' => false,
+                'delete' => false,
             ),
             'indexField' => 'index'
         );
@@ -63,8 +63,8 @@ class AdminKavaDataController extends Controller
             'fields' => $this->fieldsData,
             'data' => $data,
             'buttons' => array(
-                'edit' => array('hide' => true),
-                'delete' => array('hide' => true),
+                'edit' => false,
+                'delete' => false,
             ),
         );
 

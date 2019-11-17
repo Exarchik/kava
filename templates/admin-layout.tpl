@@ -5,7 +5,7 @@
 	<div class="kava-msg-block">
 		<div id="basic-form"></div>
         <div class="form-buttons">
-            <div class="btn btn-success close-form">Зберегти</div>
+            <div class="btn btn-success send-form">Зберегти</div>
             <div class="btn btn-warning close-form">Відмінити</div>
         </div>
 	</div>

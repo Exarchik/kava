@@ -41,5 +41,10 @@ class AdminCustomersController extends Controller
         $formData = $this->typizer->prepareDataForForm($data, $this->fieldsData);
         return $this->renderClear('default-form.tpl', array('path' => $this->path, 'data' => $formData));
     }
+
+    public function sendFormAction($request)
+    {
+        return $this->json($request['post']);
+    }
 }
 

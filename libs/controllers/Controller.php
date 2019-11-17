@@ -80,17 +80,21 @@ class Controller
             if (!isset($newParameters[$key])) {
                 $newParameters[$key] = $param;
             } else {
-                if (is_array($param)) {
-                    $newParameters[$key] = array_merge_recursive($newParameters[$key], $param);
+                if ($key == 'buttons' && !empty($param)) {
+                    foreach ($param as $bKey => $bData) {
+                        if ($bData === false) {
+                            unset($newParameters[$key][$bKey]);
+                        } else {
+                            $newParameters[$key][$bKey] = $bData;
+                        }
+                    }
                 } else {
-                    $newParameters[$key] = $param;
+                    if (is_array($param)) {
+                        $newParameters[$key] = array_merge_recursive($newParameters[$key], $param);
+                    } else {
+                        $newParameters[$key] = $param;
+                    }
                 }
-            }
-        }
-
-        foreach ($newParameters['buttons'] as $key => $button){
-            if (isset($button['hide'])) {
-                unset($newParameters['buttons'][$key]);
             }
         }
 

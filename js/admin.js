@@ -5,6 +5,24 @@
 		jQuery('.kava-admin-form').hide();
 	});
 
+	jQuery('body').on('click', '.send-form', function() {
+		var adminFormData = {'form-path':jQuery('#admin-form').data('path'), 'form-data':jQuery('#admin-form').serializeArray()};
+		var sendLink = admin_base_link+'?l='+adminFormData['form-path']+'&a=send-form';
+		console.log([sendLink, adminFormData]);
+		jQuery.ajax({
+			url: sendLink,
+			type: "POST",
+			data: adminFormData,
+			dataType: "html",
+			beforeSend: function(xhr) {
+				//
+			},
+		}).success(function(backdata) {
+			var response = jQuery.parseJSON(backdata);
+			console.log(response);
+		});
+	});
+
 	// что-то делаем со строчкой
 	jQuery('body').on('click', '.action-row', function() {
 		$this = jQuery(this);
@@ -22,7 +40,6 @@
 		jQuery.ajax({
 			url: formLink,
 			type: "GET",
-			//data: {'name': name},
 			dataType: "html",
 			// перед началом отправки
 			beforeSend: function(xhr) {
