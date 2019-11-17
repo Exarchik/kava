@@ -29,7 +29,10 @@ $config = new KavaConfig($cfg_host, $cfg_user, $cfg_password, $cfg_db, $cfg_base
 
 require_once("const.php");
 
-require_once("db.php");
+require_once(_LIBS.'db'.DS.'PDODecorator.php');
+
+$db = new PDODecorator($config->host, $config->db, $config->user, $config->password);
+
 require_once("functions.php");
 
 require_once(_LIBS.'DataHelper.php');
