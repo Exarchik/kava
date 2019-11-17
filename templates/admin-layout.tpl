@@ -48,6 +48,8 @@
         if (jQuery('#generated-table').length) {
             jQuery('#generated-table').DataTable({
                 stateSave: true,
+                pageLength: 12,
+                lengthMenu: [[10, 12, 15, 25, 50, -1], [10, 12, 15, 25, 50, "All"]],
                 "language": {
                     "search" : "Пошук:",
                     "lengthMenu": "Показувати _MENU_ позицій на сторінку",

@@ -79,3 +79,14 @@ function stringToMethodName($stringData, $camelCase = false) {
     $str = join('', array_map('ucfirst', explode(' ', str_replace(array('-', '_'), ' ', $stringData))));
     return $camelCase ? lcfirst($str) : $str;
 }
+
+
+// ----
+function _p($data, $toString = false) {
+    $viewData = "<pre>".print_r($data, 1)."</pre>";
+    if ($toString) {
+        return $viewData;
+    } else {
+        echo $viewData;
+    }
+}

@@ -22,12 +22,15 @@ class DataHelper
 
     public static function prepareFormData($formData, $fields)
     {
-        $resultData = array();
+        $resultData = array('id' => 0, 'data' => array());
         foreach ($fields as $field => $params) {
-            if (isset($formData['input-'.$field])) {
-                $resultData[$field] = self::prepareFieldByType($formData['input-'.$field], $params['type']);
+            $tmpData = isset($formData['input-'.$field]) ? $formData['input-'.$field] : false;
+            $tmpData = self::prepareFieldByType($tmpData, $params['type']);
+
+            if ($field == 'id') {
+                $resultData['id'] = $tmpData;
             } else {
-                $resultData[$field] = self::prepareFieldByType(false, $params['type']);
+                $resultData['data'][$field] = $tmpData;
             }
         }
         return $resultData;

@@ -16,11 +16,14 @@
 			data: adminFormData,
 			dataType: "html",
 			beforeSend: function(xhr) {
-				//
+				jQuery('.form-buttons>.btn').addClass('disabled');
 			},
 		}).success(function(backdata) {
 			var response = jQuery.parseJSON(backdata);
-			console.log(response);
+			jQuery('.darkness').hide();
+			jQuery('.kava-admin-form').hide();
+			jQuery('.form-buttons>.btn').removeClass('disabled');
+			location.reload();
 		});
 	});
 

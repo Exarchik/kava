@@ -45,7 +45,15 @@ class AdminCustomersController extends Controller
     public function sendFormAction($request)
     {
         $preparedData = DataHelper::prepareFormData($request['post'], $this->fieldsData);
-        return $this->json($preparedData);
+
+        $updateSql = array();
+        foreach ($preparedData['data'] as $key => $value) {
+            $updateSql[] = "`{$key}` = {$this->db->quote($value)}";
+        }
+        $sql = "UPDATE `_kava_persons` SET ".join(', ', $updateSql)." WHERE `id` = {$preparedData['id']}";
+
+        $result = $this->db->query($sql);
+        return $this->json(array('result' => ($result != false)));
     }
 }
 

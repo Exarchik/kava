@@ -24,7 +24,7 @@ class AdminKavaDataController extends Controller
 
         $data = $pd->getKavaDataByYearsMonths();
 
-        $data = $this->typizer->prepareValues($data, $this->fieldsData);
+        $data = $this->typizer->prepareValues($data, $fieldsData);
 
         $params = array(
             'caption' => 'Замовлення кав`ярні',
