@@ -1,21 +1,31 @@
-<?php 
-class KavaConfig{
-	public $host = 'localhost';
-	//public $user = 'u_kafe_local';
-    public $user = 'root';
-	//public $password = 'Coffee_maker_159';
-    public $password = '';
-	//public $db = 'kava';
-    public $db = 'kava_deps_04102019';
-	//public $base_link = 'http://kava.deps.ua';
-	public $base_link = 'http://localhost/kava';
+<?php
+require_once 'config.php';
+
+class KavaConfig {
+	public $host;
+    public $user;
+    public $password;
+    public $db;
+	public $base_link;
 	
 	// HTTP BASIC AUTHENTICATION логин/пароль от админки
-	public $basicLogin = 'admin';
-	public $basicPassword = 'aQ9WQRx4';
+	public $basicLogin;
+	public $basicPassword;
+
+	public function __construct($host, $user, $password, $db, $base_link, $basicLogin, $basicPassword)
+	{
+		$this->host = $host;
+		$this->user = $user;
+		$this->password = $password;
+		$this->db = $db;
+		$this->base_link = $base_link;
+
+		$this->basicLogin = $basicLogin;
+		$this->basicPassword = $basicPassword;
+	}
 }
 
-$config = new KavaConfig();
+$config = new KavaConfig($cfg_host, $cfg_user, $cfg_password, $cfg_db, $cfg_base_link, $cfg_basicLogin, $cfg_basicPassword);
 
 require_once("const.php");
 

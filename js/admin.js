@@ -32,12 +32,14 @@
 			},
 		}).success(function(backdata) {
 			jQuery('#basic-form').html(backdata);
+			var topParameter = (jQuery('body').outerHeight() - jQuery('.kava-admin-form').outerHeight())/2;
 			jQuery('.kava-admin-form').show();
-			console.log(backdata);
+			jQuery('.kava-admin-form').css('top', topParameter+'px');
+			//console.log(backdata);
 			jQuery('.kava-loader').hide();
 		}).fail(function(backdata) {
 			var response = jQuery.parseJSON(backdata);
-			console.log(response);
+			//console.log(response);
 			jQuery('.kava-loader').hide();
 		});
 	});
