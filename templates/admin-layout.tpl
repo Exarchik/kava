@@ -5,6 +5,7 @@
 	<div class="kava-msg-block">
 		<div id="basic-form"></div>
         <div class="form-buttons">
+            <div class="btn btn-success close-form">Зберегти</div>
             <div class="btn btn-warning close-form">Відмінити</div>
         </div>
 	</div>
@@ -30,6 +31,7 @@
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/font-awesome.css">
 <link rel="stylesheet" href="css/kava.css">
+<link rel="stylesheet" href="css/admin.css">
 <link rel="stylesheet" href="css/jquery-ui.css">
 <link rel="stylesheet" href="css/air-datepicker.css">
 

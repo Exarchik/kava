@@ -43,7 +43,7 @@ class AdminListBooksController extends Controller
         $data = $this->db->getRow("SELECT * FROM `books` WHERE id = {$id}");
 
         $formData = $this->typizer->prepareDataForForm($data, $this->fieldsData);
-        return $this->renderClear('default-form.tpl', array('data' => $formData));
+        return $this->renderClear('default-form.tpl', array('path' => $this->path, 'data' => $formData));
     }
 }
 

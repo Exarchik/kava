@@ -5,6 +5,6 @@
     </div>
     <div class="col-sm-8">
         <span class="errors error-{$field}"></span>
-        <input class="form-control" autocomplete="off" id="input-{$field}" type="text" placeholder="{$params.caption}" value="{$value}"/>
+        <input class="form-control" autocomplete="off" id="input-{$field}" name="input-{$field}" type="text" placeholder="{$params.caption}" value="{$value}"/>
     </div>
 </div>
