@@ -5,3 +5,7 @@
     {/foreach}
 </div>
 </form>
+<div class="form-buttons">
+    <div class="btn btn-success send-form">Зберегти</div>
+    <div class="btn btn-warning close-form">Відмінити</div>
+</div>

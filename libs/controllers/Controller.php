@@ -63,7 +63,7 @@ class Controller
         return array(
             // кнопки по умолчанию чтобы спрятать нужно в параметрах передать false
             'buttons' => array(
-                'add' => array('icon' => 'fa-plus', 'color' => 'green', 'caption' => 'Додати', 'for-head' => true),
+                'add' => array('icon' => 'fa-plus', 'color' => 'green', 'caption' => 'Додати', 'for-head' => true, 'action' => 'edit'),
                 'edit' => array('icon' => 'fa-edit', 'color' => 'blue'),
                 'delete' => array('icon' => 'fa-remove', 'color' => 'red'),
             ),

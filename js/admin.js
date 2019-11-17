@@ -1,8 +1,27 @@
 ﻿jQuery( document ).ready(function() {
 
+	jQuery('body').on('click', '.yes-form', function() {
+		var sendLink = admin_base_link+'?'+jQuery('#admin-form #link').val();
+		jQuery.ajax({
+			url: sendLink,
+			type: "POST",
+			data: {'confirm' : 'yes'},
+			dataType: "html",
+			beforeSend: function(xhr) {
+				jQuery('.form-buttons>.btn').addClass('disabled');
+			},
+		}).success(function(backdata) {
+			jQuery('#basic-form').html(backdata);
+		});
+	});
+
 	jQuery('body').on('click', '.close-form, .darkness', function() {
 		jQuery('.darkness').hide();
 		jQuery('.kava-admin-form').hide();
+	});
+
+	jQuery('body').on('click', '.close-reloading', function() {
+		location.reload();
 	});
 
 	jQuery('body').on('click', '.send-form', function() {

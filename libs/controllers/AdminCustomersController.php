@@ -32,22 +32,40 @@ class AdminCustomersController extends Controller
         return $this->renderView('table.tpl', $params);
     }
 
-    public function addAction($request)
+    public function deleteAction($request)
     {
-        $data = array_fill_keys(array_keys($this->fieldsData), '');
-        
-        $formData = $this->typizer->prepareDataForForm($data, $this->fieldsData);
-        return $this->renderClear('default-form.tpl', array('path' => $this->path, 'data' => $formData));
+        $id = $request['get']['id'] ?: false;
+        $confirm = $request['post']['confirm'] ?: 'no';
+        if ($id === false) {
+            return $this->display('Не вказано ID');
+        }
+        if ($confirm == 'yes') {
+            $result = $this->db->query("DELETE FROM `_kava_persons` WHERE id = {$id}");
+            if ($result == false) {
+                return $this->display('Виникла помилка');    
+            }
+            return $this->renderClear('message-form.tpl', array(
+                'message' => 'Видалено успішно',
+                'reloadPage' => true
+            ));
+        }
+
+        $params = array(
+            'link' => 'l='.$this->path.'&a=delete&id='.$id,
+            'caption' => 'Видалення',
+            'message' => 'Видалити запис №'.$id,
+        );
+        return $this->renderClear('answer-form.tpl', $params);
     }
 
     public function editAction($request)
     {
-        $id = $request['get']['id'] ?? false;
+        $id = $request['get']['id'] ?: false;
         if ($id === false) {
-            return $this->json(['result' => false]);
+            $data = array_fill_keys(array_keys($this->fieldsData), '');
+        } else {
+            $data = $this->db->getRow("SELECT * FROM `_kava_persons` WHERE id = {$id}");
         }
-
-        $data = $this->db->getRow("SELECT * FROM `_kava_persons` WHERE id = {$id}");
 
         $formData = $this->typizer->prepareDataForForm($data, $this->fieldsData);
         return $this->renderClear('default-form.tpl', array('path' => $this->path, 'data' => $formData));
