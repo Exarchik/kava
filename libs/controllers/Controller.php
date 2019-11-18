@@ -57,13 +57,22 @@ class Controller
         return $this->renderer->json($data);
     }
 
+    // базовое сообщение + перегрузка страницы
+    public function alert($msg, $isReloadingPage = false)
+    {
+        return $this->renderClear('message-form.tpl', array(
+            'message' => $msg,
+            'reloadPage' => $isReloadingPage
+        ));
+    }
+
     // базовые параметры для Рендерера
     public function getDefaultParameters()
     {
         return array(
             // кнопки по умолчанию чтобы спрятать нужно в параметрах передать false
             'buttons' => array(
-                'add' => array('icon' => 'fa-plus', 'color' => 'green', 'caption' => 'Додати', 'for-head' => true, 'action' => 'edit'),
+                'add' => array('icon' => 'fa-plus', 'color' => 'white', 'caption' => 'Додати', 'for-head' => true, 'action' => 'edit'),
                 'edit' => array('icon' => 'fa-edit', 'color' => 'blue'),
                 'delete' => array('icon' => 'fa-remove', 'color' => 'red'),
             ),
@@ -85,6 +94,7 @@ class Controller
                     foreach ($param as $bKey => $bData) {
                         if ($bData === false) {
                             unset($newParameters[$key][$bKey]);
+                            continue;
                         } elseif (isset($newParameters[$key][$bKey])) {
                             $newParameters[$key][$bKey] = array_merge($newParameters[$key][$bKey], $bData);
                         } else {
@@ -98,6 +108,17 @@ class Controller
                         $newParameters[$key] = $param;
                     }
                 }
+            }
+        }
+
+        $newParameters['_btnHead'] = 0;
+        $newParameters['_btnRow'] = 0;
+        // количесто кнопок для разных позиций
+        foreach ($newParameters['buttons'] as $button) {
+            if (isset($button['for-head']) && $button['for-head'] == true) {
+                $newParameters['_btnHead']++;
+            } else {
+                $newParameters['_btnRow']++;
             }
         }
 

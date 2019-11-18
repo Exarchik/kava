@@ -37,17 +37,14 @@ class AdminCustomersController extends Controller
         $id = $request['get']['id'] ?: false;
         $confirm = $request['post']['confirm'] ?: 'no';
         if ($id === false) {
-            return $this->display('Не вказано ID');
+            return $this->alert('Не вказано ID');
         }
         if ($confirm == 'yes') {
             $result = $this->db->query("DELETE FROM `_kava_persons` WHERE id = {$id}");
             if ($result == false) {
-                return $this->display('Виникла помилка');    
+                return $this->alert('Виникла помилка');    
             }
-            return $this->renderClear('message-form.tpl', array(
-                'message' => 'Видалено успішно',
-                'reloadPage' => true
-            ));
+            return $this->alert('Видалено успішно', true);
         }
 
         $params = array(
