@@ -32,14 +32,37 @@ class AdminListNapoiController extends Controller
         return $this->renderView('table.tpl', $params);
     }
 
-    public function editAction($request)
+    public function deleteAction($request)
     {
-        $id = $request['get']['id'] ?? false;
+        $id = $request['get']['id'] ?: false;
+        $confirm = $request['post']['confirm'] ?: 'no';
         if ($id === false) {
-            return $this->json(['result' => false]);
+            return $this->alert('Не вказано ID');
+        }
+        if ($confirm == 'yes') {
+            $result = $this->db->query("DELETE FROM `_kava_foodrink` WHERE id = {$id}");
+            if ($result == false) {
+                return $this->alert('Виникла помилка');    
+            }
+            return $this->alert('Видалено успішно', true);
         }
 
-        $data = $this->db->getRow("SELECT * FROM `_kava_foodrink` WHERE id = {$id}");
+        $params = array(
+            'link' => 'l='.$this->path.'&a=delete&id='.$id,
+            'caption' => 'Видалення',
+            'message' => 'Видалити запис №'.$id,
+        );
+        return $this->renderClear('answer-form.tpl', $params);
+    }
+
+    public function editAction($request)
+    {
+        $id = $request['get']['id'] ?: false;
+        if ($id === false) {
+            $data = array_fill_keys(array_keys($this->fieldsData), '');
+        } else {
+            $data = $this->db->getRow("SELECT * FROM `_kava_foodrink` WHERE id = {$id}");
+        }
 
         $formData = $this->typizer->prepareDataForForm($data, $this->fieldsData);
         return $this->renderClear('default-form.tpl', array('path' => $this->path, 'data' => $formData));
@@ -47,7 +70,19 @@ class AdminListNapoiController extends Controller
     public function sendFormAction($request)
     {
         $preparedData = DataHelper::prepareFormData($request['post'], $this->fieldsData);
-        return $this->json($preparedData);
+
+        $dataSql = array();
+        if (!empty($preparedData['id'])) {
+            foreach ($preparedData['data'] as $key => $value) {
+                $dataSql[] = "`{$key}` = {$this->db->quote($value)}";
+            }
+            $sql = "UPDATE `_kava_foodrink` SET ".join(', ', $dataSql)." WHERE `id` = {$preparedData['id']}";
+        } else {
+            $sql = "INSERT INTO `_kava_foodrink` (".join(',', $this->db->quoteAllFields(array_keys($preparedData['data']))).") VALUES (".join(',', $this->db->quoteAll($preparedData['data'])).")";
+        }
+
+        $result = $this->db->query($sql);
+        return $this->json(array('result' => ($result != false)));
     }
 }
 
