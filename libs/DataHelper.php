@@ -27,6 +27,10 @@ class DataHelper
             $tmpData = isset($formData['input-'.$field]) ? $formData['input-'.$field] : false;
             $tmpData = self::prepareFieldByType($tmpData, $params['type']);
 
+            if ($params['type'] != 'boolean' && isset($params['default'])) {
+                $tmpData = $tmpData ?: $params['default'];
+            }
+
             if ($field == 'id') {
                 $resultData['id'] = $tmpData;
             } else {
